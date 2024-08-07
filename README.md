@@ -1,5 +1,3 @@
-
-
 <h1 align="center"> Job Portal Web App </h1>
 
 <p align="center">
@@ -14,23 +12,16 @@
   <ol>
     <li><a href="#about-the-project"> ➤ About The Project</a></li>
     <li><a href="#overview"> ➤ Overview</a></li>
-    <li><a href="#step1"> ➤ Screenshots </a></li>
-    <li><a href="#step2"> ➤ Entity Relationships </a></li>
+    <li><a href="#entityRelationships"> ➤ Entity Relationships </a></li>
   </ol>
 </details>
 
-
-
-<!-- ABOUT THE PROJECT -->
 <h2 id="about-the-project"> :pencil: About The Project</h2>
 
 <p align="justify"> 
   The Job Portal Web App is a comprehensive platform designed to streamline the job recruitment process. It caters to two types of users: recruiters and candidates.
 </p>
 
-
-
-<!-- OVERVIEW -->
 <h2 id="overview"> 🔐: Key Features</h2>
 
 <p align="justify">
@@ -40,37 +31,7 @@
   <b>Global Job Search:</b> Users can search for jobs globally without the need to log in.
 </p>
 
-
-
-<!-- STEP1 -->
-<h2 id="step1"> 📷: Screenshoots:</h2>
-
-<p align="center">
-  <img src="images/job-portal-2.png"" alt="Rainbow" width="your_preferred_width">
-</p>
-
-<p align="center">
-  <img src="images/job-portal-3.png"" alt="Rainbow" width="your_preferred_width">
-</p>
-
-<p align="center">
-  <img src="images/job-portal-4.png"" alt="Rainbow" width="your_preferred_width">
-</p>
-
-<p align="center">
-  <img src="images/job-portal-5.png"" alt="Rainbow" width="your_preferred_width">
-</p>
-
-<p align="center">
-  <img src="images/job-portal-6.png"" alt="Rainbow" width="your_preferred_width">
-</p>
-
-<p align="center">
-  <img src="images/job-portal-7.png"" alt="Rainbow" width="your_preferred_width">
-</p>
-
-<!-- STEP2 -->
-<h2 id="step2"> :small_orange_diamond: Entity Relationships</h2>
+<h2 id="entityRelationships"> :small_orange_diamond: Entity Relationships</h2>
 
 <p align="center">
   <img src="images/diagram.png"" alt="Rainbow" width="your_preferred_width">
