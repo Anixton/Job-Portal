@@ -128,23 +128,24 @@ public class JobSeekerProfileController {
                                             @RequestParam(value = "userID") String userId) {
 
         FileDownloadUtil fileDownloadUtil = new FileDownloadUtil();
-        Resource resource = null;
 
         try {
-            resource = fileDownloadUtil.getFileAsResource("photos/candidate/"+ userId,fileName);
+            Optional<Resource> optionalResource = fileDownloadUtil.getFileAsResource("photos/candidate/" + userId, fileName);
+
+            if (optionalResource.isPresent()) {
+                Resource resource = optionalResource.get();
+                String contentType = "application/octet-stream";
+                String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
+
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(contentType))
+                        .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (IOException ioException) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        if (resource == null) {
-            return new ResponseEntity<>("File not found", HttpStatus.NOT_FOUND);
-        }
-
-        String contentType = "application/octet-stream";
-        String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
-
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
-                .body(resource);
     }
 }
