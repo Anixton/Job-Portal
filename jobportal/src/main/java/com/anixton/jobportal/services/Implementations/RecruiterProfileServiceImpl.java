@@ -40,11 +40,27 @@ public class RecruiterProfileServiceImpl implements RecruiterProfileService {
     @Override
     public RecruiterProfile getCurrentRecruiterProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+
+        if (isAuthenticated(authentication)) {
             String currentUsername = authentication.getName();
-            Users users = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            Optional<RecruiterProfile> recruiterProfile = getOne(users.getUserId());
-            return recruiterProfile.orElse(null);
-        } else return null;
+            Users users = findUserByEmail(currentUsername);
+            return getRecruiterProfileForUser(users);
+        }
+
+        return null;
+    }
+
+    private boolean isAuthenticated(Authentication authentication) {
+        return !(authentication instanceof AnonymousAuthenticationToken);
+    }
+
+    private Users findUserByEmail(String email) {
+        return usersRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    public RecruiterProfile getRecruiterProfileForUser(Users user) {
+        return getOne(user.getUserId())
+                .orElse(null);
     }
 }

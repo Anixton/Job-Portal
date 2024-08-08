@@ -26,24 +26,34 @@ public class JobPostActivityServiceImpl implements JobPostActivityService {
 
     @Override
     public List<RecruiterJobsDto> getRecruiterJobs(int recruiter) {
+        List<IRecruiterJobs> recruiterJobs = jobPostActivityRepository.getRecruiterJobs(recruiter);
+        return convertToDto(recruiterJobs);
+    }
 
-        List<IRecruiterJobs> recruiterJobsDtos = jobPostActivityRepository.getRecruiterJobs(recruiter);
-
+    private List<RecruiterJobsDto> convertToDto(List<IRecruiterJobs> recruiterJobs) {
         List<RecruiterJobsDto> recruiterJobsDtoList = new ArrayList<>();
 
-        for (IRecruiterJobs rec : recruiterJobsDtos) {
-            JobLocation loc = new JobLocation(rec.getLocationId(), rec.getCity(), rec.getState(), rec.getCountry());
-            JobCompany comp = new JobCompany(rec.getCompanyId(), rec.getName(), "");
-            recruiterJobsDtoList.add(new RecruiterJobsDto(rec.getTotalCandidates(), rec.getJob_post_id(),
-                    rec.getJob_title(), loc, comp));
+        for (IRecruiterJobs job : recruiterJobs) {
+            RecruiterJobsDto dto = createRecruiterJobsDto(job);
+            recruiterJobsDtoList.add(dto);
         }
-        return recruiterJobsDtoList;
 
+        return recruiterJobsDtoList;
+    }
+
+    private RecruiterJobsDto createRecruiterJobsDto(IRecruiterJobs job) {
+        JobLocation jobLocation = new JobLocation(job.getLocationId(), job.getCity(),
+                job.getState(), job.getCountry());
+        JobCompany jobCompany = new JobCompany(job.getCompanyId(), job.getName(), "");
+
+        return new RecruiterJobsDto(job.getTotalCandidates(), job.getJob_post_id(),
+                job.getJob_title(), jobLocation, jobCompany);
     }
 
     @Override
     public JobPostActivity getOne(int id) {
-        return jobPostActivityRepository.findById(id).orElseThrow(()->new RuntimeException("Job not found"));
+        return jobPostActivityRepository.findById(id).
+                orElseThrow(()->new RuntimeException("Job not found"));
     }
 
     @Override

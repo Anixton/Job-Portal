@@ -7,23 +7,29 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class FileDownloadUtil {
 
     private Path foundFile;
 
-    public Resource getFileAsResource(String downloadDir, String fileName) throws IOException {
-
+    public Optional<Resource> getFileAsResource(String downloadDir, String fileName) throws IOException {
         Path path = Paths.get(downloadDir);
-        Files.list(path).forEach(file -> {
-            if (file.getFileName().toString().startsWith(fileName)) {
-                foundFile = file;
-            }
-        });
 
-        if (foundFile != null) {
-            return new UrlResource(foundFile.toUri());
+        try (Stream<Path> fileStream = Files.list(path)) {
+            return fileStream
+                    .filter(file -> file.getFileName().toString().startsWith(fileName))
+                    .findFirst()
+                    .map(this::convertPathToResource);
         }
-        return null;
+    }
+
+    private Resource convertPathToResource(Path path) {
+        try {
+            return new UrlResource(path.toUri());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

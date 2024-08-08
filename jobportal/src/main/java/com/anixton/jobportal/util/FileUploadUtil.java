@@ -11,14 +11,6 @@ import java.nio.file.StandardCopyOption;
 
 public class FileUploadUtil {
 
-    /**
-     * Saves a file to the specified upload directory.
-     *
-     * @param uploadDir the upload directory path
-     * @param fileName the name of the file to be saved
-     * @param multipartFile the multipart file to be saved
-     * @throws IOException if an I/O error occurs during file operations
-     */
     public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
         if(!Files.exists(uploadPath)) {

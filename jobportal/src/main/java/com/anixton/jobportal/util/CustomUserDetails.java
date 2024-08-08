@@ -11,24 +11,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Custom implementation of UserDetails for representing user details in Spring Security.
- */
 public class CustomUserDetails implements UserDetails {
 
     private final Users user;
 
-    // Constructor Injection
-    @Autowired
     public  CustomUserDetails(Users user) {
         this.user = user;
     }
 
-    /**
-     * Retrieves the authorities granted to the user.
-     *
-     * @return a collection of GrantedAuthority objects representing user roles
-     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         UsersType usersType = user.getUserTypeId();
